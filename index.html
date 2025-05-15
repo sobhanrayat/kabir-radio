@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
-  <title>پخش آنلاین آهنگ سبحان</title>
+  <title>پلیر خودکار آهنگ‌ها</title>
   <style>
     body {
       font-family: sans-serif;
@@ -12,17 +12,50 @@
       padding: 50px;
     }
     audio {
-      margin-top: 20px;
       width: 80%;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>🎵 پخش آنلاین آهنگ</h1>
-  <p>آهنگ: Full Moon - Taha Sedighi</p>
-  <audio controls>
-    <source src="https://pixeldrain.com/api/file/Dr59zKUn" type="audio/mpeg">
-    مرورگر شما از پخش صوتی پشتیبانی نمی‌کند.
-  </audio>
+  <h1>🎵 پخش خودکار آهنگ‌ها</h1>
+  <p id="songTitle">آهنگ در حال پخش:</p>
+  <audio id="audioPlayer" controls autoplay></audio>
+
+  <script>
+    const playlist = [
+      {
+        title: "Full Moon - Taha Sedighi",
+        src: "https://pixeldrain.com/api/file/Dr59zKUn"
+      },
+      {
+        title: "Paiiz - Taha Sedighi",
+        src: "https://store5.gofile.io/download/web/bea38c6e-87f6-46b4-ac0a-ac9a6d0570d8/Taha%20Sedighi%20-%20Paiiz%202024-10-16%2002_07.m4a"
+      }
+      // اینجا می‌تونی آهنگ‌های بیشتر اضافه کنی
+    ];
+
+    let currentIndex = 0;
+    const audioPlayer = document.getElementById('audioPlayer');
+    const songTitle = document.getElementById('songTitle');
+
+    function loadSong(index) {
+      audioPlayer.src = playlist[index].src;
+      songTitle.textContent = "آهنگ در حال پخش: " + playlist[index].title;
+      audioPlayer.play();
+    }
+
+    audioPlayer.addEventListener('ended', () => {
+      currentIndex++;
+      if (currentIndex >= playlist.length) {
+        currentIndex = 0; // اگر دوست داری بعد از آخرین آهنگ بره اولی، این خط رو بذار
+        // اگه نمی‌خوای دوباره تکرار بشه، این خط رو حذف کن یا جایگزین کن با کد مناسب
+      }
+      loadSong(currentIndex);
+    });
+
+    // شروع پخش اولین آهنگ
+    loadSong(currentIndex);
+  </script>
 </body>
 </html>
